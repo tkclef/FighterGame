@@ -43,6 +43,9 @@ AFighterGameCharacter::AFighterGameCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+	wasFirstAttackUsed = false;
+	playerHealth = 1.00f;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -55,9 +58,19 @@ void AFighterGameCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AFighterGameCharacter::MoveRight);
 
+	PlayerInputComponent->BindAction("Attack1", IE_Pressed, this, &AFighterGameCharacter::StartAttack1);
+	//PlayerInputComponent->BindAction("Attack1", IE_Pressed, this, &AFighterGameCharacter::StopAttack1);
+	PlayerInputComponent->BindAction("Attack2", IE_Pressed, this, &AFighterGameCharacter::StartAttack2);
+	//PlayerInputComponent->BindAction("Attack2", IE_Pressed, this, &AFighterGameCharacter::StopAttack2);
+	PlayerInputComponent->BindAction("Attack3", IE_Pressed, this, &AFighterGameCharacter::StartAttack3);
+	//PlayerInputComponent->BindAction("Attack3", IE_Pressed, this, &AFighterGameCharacter::StopAttack3);
+	PlayerInputComponent->BindAction("Attack4", IE_Pressed, this, &AFighterGameCharacter::StartAttack4);
+	//PlayerInputComponent->BindAction("Attack4", IE_Pressed, this, &AFighterGameCharacter::StopAttack4);
+
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AFighterGameCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AFighterGameCharacter::TouchStopped);
 }
+
 
 void AFighterGameCharacter::MoveRight(float Value)
 {
@@ -74,5 +87,40 @@ void AFighterGameCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, co
 void AFighterGameCharacter::TouchStopped(const ETouchIndex::Type FingerIndex, const FVector Location)
 {
 	StopJumping();
+}
+
+void AFighterGameCharacter::StartAttack1()
+{
+	UE_LOG(LogTemp, Warning, TEXT("we are using our first attack"));
+	wasFirstAttackUsed = true;
+}
+
+void AFighterGameCharacter::StartAttack2()
+{
+	UE_LOG(LogTemp, Warning, TEXT("we are using our second attack"));
+}
+
+void AFighterGameCharacter::StartAttack3()
+{
+	UE_LOG(LogTemp, Warning, TEXT("we are using our third attack"));
+}
+
+void AFighterGameCharacter::StartAttack4()
+{
+	UE_LOG(LogTemp, Warning, TEXT("we are using our fourth attack"));
+	TakeDamage(0.05f);
+
+}
+
+void AFighterGameCharacter::TakeDamage(float _damageAmount)
+{
+	UE_LOG(LogTemp, Warning, TEXT("we are taking damage for %f points"), _damageAmount);
+	playerHealth -= _damageAmount;
+
+	if (playerHealth < 0.00f)
+	{
+		playerHealth = 0.00f;
+	}
+
 }
 

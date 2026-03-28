@@ -19,6 +19,11 @@ class AFighterGameCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
+	void StartAttack1();
+	void StartAttack2();
+	void StartAttack3();
+	void StartAttack4();
+
 protected:
 
 	/** Called for side to side input */
@@ -34,6 +39,17 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
+	//Damage the player.
+	UFUNCTION(BlueprintCallable)
+	void TakeDamage(float _damageAmount);
+
+	//Has the player used basic attack?
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attacks")
+	bool wasFirstAttackUsed;
+
+	//The amount of health the character  currently has.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	float playerHealth;
 
 public:
 	AFighterGameCharacter();

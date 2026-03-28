@@ -25,3 +25,11 @@ void AHitbox::Tick(float DeltaTime)
 
 }
 
+
+void AHitbox::TriggerVisualizeHitbox()
+{
+}
+
+void AHitbox::VisualizeHitbox()
+{
+}

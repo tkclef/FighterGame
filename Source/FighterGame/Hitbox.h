@@ -6,6 +6,13 @@
 #include "GameFramework/Actor.h"
 #include "Hitbox.generated.h"
 
+UENUM(BlueprintType)
+enum class EHitboxEnum : uint8
+{
+	HB_PROXIMITY	UMETA(DisplayName = "Proximity"),
+	HB_Strike		UMETA(DisplayName = "Strike"),
+	HB_HURTBOX	UMETA(DisplayName = "Hurtbox")
+};
 UCLASS()
 class FIGHTERGAME_API AHitbox : public AActor
 {
@@ -14,6 +21,28 @@ class FIGHTERGAME_API AHitbox : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AHitbox();
+
+	//Notify the hitboxBP class instance that the hitbox is ready to be drawn.
+	UFUNCTION(BlueprintCallable)
+	void TriggerVisualizeHitbox();
+
+	//Draw the hitbox to the screen to visualize  it (if this is a debug settings or practice mode).
+	UFUNCTION(BlueprintCallable)
+	void VisualizeHitbox();
+
+	//The damage this hitbox will deal to the player if it hits them.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hitbox")
+	float HitboxDamage;
+
+
+	//The hitbox enum instance.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hitbox")
+	EHitboxEnum HitboxType;
+
+	//The location  to spawn  the hitbox.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hitbox")
+	FVector HitboxLocation;
+
 
 protected:
 	// Called when the game starts or when spawned
